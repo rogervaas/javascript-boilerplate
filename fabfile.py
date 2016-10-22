@@ -22,13 +22,14 @@ def install_swap():
 def setup_api():
     print(green('Installing dependencies ...'))
     sudo('apt --yes update && apt --yes upgrade')
-    sudo('curl -sL https://deb.nodesource.com/setup_5.x | bash -')
+    sudo('curl -sL https://deb.nodesource.com/setup_6.x | bash -')
     sudo('apt --yes install build-essential')
     sudo('apt --yes install libkrb5-dev')
     sudo('apt --yes install nodejs')
-    sudo('apt --yes install supervisor')
     sudo('apt --yes install git htop vim')
     run('npm set progress=false')
+    sudo('npm install pm2@latest -g')
+    sudo('pm2 startup') # Enable PM2 to restart applications on server boot/reboot
 
     run('git clone %s %s/%s' % (gitUrl, env.home, env.api_pwd))
 
@@ -36,8 +37,7 @@ def setup_api():
 def check():
     run('git --version')
     run('node --version')
-    run('service supervisor status')
-    run('supervisord --version')
+    run('pm2 version')
 
 @task
 def deploy_api(branch='master'):
@@ -50,11 +50,7 @@ def deploy_api(branch='master'):
         run('make install-prod')
         # DB migrations
         run('NODE_ENV=%s make migrate' % env.environment)
-        # Update supervisor configuration
-        put(env.supervisord_source, '/etc/supervisor/conf.d/%s' % env.supervisord_dest, use_sudo=True)
-
-    sudo('service supervisor restart')
-    sudo('supervisorctl start %s' % env.api_name)
+        sudo('pm2 restart ./config/pm2_servers/%s.json' % env.environment)
 
 @task
 def deploy_static(branch='master'):

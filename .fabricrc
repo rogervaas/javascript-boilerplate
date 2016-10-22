@@ -1,5 +1,5 @@
 # Remote server infos
-hosts=newapp-api.marmelab.com
+hosts=ec2-52-48-140-130.eu-west-1.compute.amazonaws.com
 user=ubuntu
 home=/home/ubuntu
 api_name=newapp

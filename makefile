@@ -68,10 +68,10 @@ install-prod: ## Install npm dependencies for the api, admin, and frontend apps 
 	@cp -n ./config/production-dist.js ./config/production.js | true
 
 setup-staging: ## Setup the staging environment
-	fab --config=.fabricrc-staging setup_api check
+	fab --config=.fabricrc-staging install_swap setup_api check
 
 setup-prod: ## Setup the production environment
-	fab --config=.fabricrc setup_api check
+	fab --config=.fabricrc install_swap setup_api check
 
 deploy-staging-api: ## Deploy the API in staging environment
 	fab --config=.fabricrc-staging deploy_api
