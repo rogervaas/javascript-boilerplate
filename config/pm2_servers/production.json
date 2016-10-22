@@ -7,7 +7,7 @@
             },
             "instances": 1,
             "name": "bpm_api-production",
-            "script": "./src/api/src/index.js",
+            "script": "/home/ubuntu/newapp/src/api/src/index.js",
             "node_args": "--harmony --require reify --require async-to-gen/register",
             "watch": [
                 "./src/api/src",

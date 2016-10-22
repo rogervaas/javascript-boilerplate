@@ -23,10 +23,10 @@ def setup_api():
     print(green('Installing dependencies ...'))
     sudo('apt --yes update && apt --yes upgrade')
     sudo('curl -sL https://deb.nodesource.com/setup_6.x | bash -')
-    sudo('apt --yes install build-essential')
-    sudo('apt --yes install libkrb5-dev')
-    sudo('apt --yes install nodejs')
-    sudo('apt --yes install git htop vim')
+    sudo('echo deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main > /etc/apt/sources.list.d/pgdg.list')
+    sudo('apt update')
+    sudo('apt install --yes --no-install-recommends build-essential git htop libkrb5-dev nodejs htop vim')
+    sudo('apt install --force-yes --yes postgresql-9.4 postgresql-contrib-9.4')
     run('npm set progress=false')
     sudo('npm install pm2@latest -g')
     sudo('pm2 startup') # Enable PM2 to restart applications on server boot/reboot
@@ -38,6 +38,7 @@ def check():
     run('git --version')
     run('node --version')
     run('pm2 version')
+    run('psql --version')
 
 @task
 def deploy_api():
