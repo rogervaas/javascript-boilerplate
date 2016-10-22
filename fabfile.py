@@ -40,11 +40,11 @@ def check():
     run('pm2 version')
 
 @task
-def deploy_api(branch='master'):
+def deploy_api():
     with cd('%s/%s' % (env.home, env.api_pwd)):
         # Git
         run('git fetch')
-        run('git checkout %s' % branch)
+        run('git checkout %s' % env.branch)
         run('git pull')
         # Install dependencies
         run('make install-prod')
