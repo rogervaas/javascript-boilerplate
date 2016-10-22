@@ -51,12 +51,12 @@ def deploy_api():
         run('make install-prod')
         # DB migrations
         run('NODE_ENV=%s make migrate' % env.environment)
-        sudo('pm2 restart ./config/pm2_servers/%s.json' % env.environment)
+        sudo('pm2 startOrRestart ./config/pm2_servers/%s.json' % env.environment)
 
 @task
-def deploy_static(branch='master'):
+def deploy_static():
     local('git fetch')
-    local('git checkout %s' % branch)
+    local('git checkout %s' % env.branch)
     local('git pull')
     local('rm -rf build/*')
     local('NODE_ENV=%s make build' % env.environment)

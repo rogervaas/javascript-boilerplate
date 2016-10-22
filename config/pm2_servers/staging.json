@@ -6,8 +6,9 @@
                 "NODE_PORT": 80
             },
             "instances": 1,
-            "name": "bpm_api-production",
-            "script": "/home/ubuntu/newapp/src/api/src/index.js",
+            "name": "bpm_api-staging",
+            "cwd": "/home/ubuntu/newapp",
+            "script": "./src/api/src/index.js",
             "node_args": "--harmony --require reify --require async-to-gen/register",
             "watch": [
                 "./src/api/src",
